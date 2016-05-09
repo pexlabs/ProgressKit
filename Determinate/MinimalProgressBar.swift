@@ -9,7 +9,6 @@
 import Foundation
 import Cocoa
 
-@IBDesignable
 public class MinimalProgressBar: DeterminateAnimation {
 
     var progressLayer = CAShapeLayer()
@@ -27,9 +26,7 @@ public class MinimalProgressBar: DeterminateAnimation {
 
     override func configureLayers() {
         super.configureLayers()
-
         progressLayer.frame = bounds
-        progressLayer.cornerRadius = progressLayer.frame.height / 2
         progressLayer.backgroundColor = foreground.CGColor
         layer?.addSublayer(progressLayer)
     }
