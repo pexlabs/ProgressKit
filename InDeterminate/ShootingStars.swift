@@ -66,10 +66,18 @@ public class ShootingStars: IndeterminateAnimation {
         tempAnimation.duration = animationDuration / 2
         tempAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
     }
-    
+
+    #if !swift(>=2.3)
+
     override public func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         starLayer2.addAnimation(animation, forKey: "default")
     }
+
+    #else
+    public func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+        starLayer2.addAnimation(animation, forKey: "default")
+    }
+    #endif
     
     //MARK: Indeterminable protocol
     override func startAnimation() {
@@ -82,3 +90,11 @@ public class ShootingStars: IndeterminateAnimation {
         starLayer2.removeAllAnimations()
     }
 }
+
+#if swift(>=2.3)
+
+extension ShootingStars: CAAnimationDelegate {
+
+}
+
+#endif

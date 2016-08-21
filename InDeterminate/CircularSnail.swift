@@ -99,6 +99,9 @@ public class CircularSnail: IndeterminateAnimation {
 
     var currentRotation = 0.0
     let π2 = M_PI * 2
+
+    #if !swift(>=2.3)
+
     override public func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         if !animate { return }
         CATransaction.begin()
@@ -110,6 +113,21 @@ public class CircularSnail: IndeterminateAnimation {
         progressLayer.addAnimation(animationGroup, forKey: "strokeEnd")
     }
 
+    #else
+
+    public func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+        if !animate { return }
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        currentRotation += strokeRange.end * π2
+        currentRotation %= π2
+        progressLayer.setAffineTransform(CGAffineTransformMakeRotation(CGFloat( currentRotation)))
+        CATransaction.commit()
+        progressLayer.addAnimation(animationGroup, forKey: "strokeEnd")
+    }
+
+    #endif
+
     override func startAnimation() {
         progressLayer.addAnimation(animationGroup, forKey: "strokeEnd")
         backgroundRotationLayer.addAnimation(rotationAnimation, forKey: rotationAnimation.keyPath)
@@ -119,3 +137,11 @@ public class CircularSnail: IndeterminateAnimation {
         progressLayer.removeAllAnimations()
     }
 }
+
+#if swift(>=2.3)
+
+extension CircularSnail: CAAnimationDelegate {
+    
+}
+
+#endif
