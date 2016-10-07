@@ -9,11 +9,11 @@
 import Foundation
 import Cocoa
 
-public class MinimalProgressBar: DeterminateAnimation {
+open class MinimalProgressBar: DeterminateAnimation {
 
     var progressLayer = CAShapeLayer()
 
-    @IBInspectable public var borderColor: NSColor = NSColor.blackColor() {
+    @IBInspectable open var borderColor: NSColor = NSColor.black {
         didSet {
             notifyViewRedesigned()
         }
@@ -21,13 +21,13 @@ public class MinimalProgressBar: DeterminateAnimation {
 
     override func notifyViewRedesigned() {
         super.notifyViewRedesigned()
-        progressLayer.backgroundColor = foreground.CGColor
+        progressLayer.backgroundColor = foreground.cgColor
     }
 
     override func configureLayers() {
         super.configureLayers()
         progressLayer.frame = bounds
-        progressLayer.backgroundColor = foreground.CGColor
+        progressLayer.backgroundColor = foreground.cgColor
         layer?.addSublayer(progressLayer)
     }
 
